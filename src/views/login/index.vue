@@ -69,19 +69,20 @@ export default Vue.extend({
         // 3.处理请求结果
         //  失败：给出提示
         if (data.state === 1) {
-          this.$message.error(data.message)
-        } else {
           // 1.登录成功，记录登录状态，状态需要能够全局访问（放到Vuex容器中）
           this.$store.commit('setUser', data.content)
           // 2.然后再访问需要登录的页面的时候，判断有没有登录状态（路由拦截器）
           // 成功：跳转到首页
-          this.$router.push({
-            name: 'home'
-          })
+          this.$router.push(this.$route.query.redirect as string || '/')
+          // this.$router.push({
+          //   name: 'home'
+          // })
           this.$message.success('登录成功')
+        } else {
+          this.$message.error(data.message)
         }
       } catch (error) {
-        console.log('登录失败!', error)
+        console.log('失败!', error)
       }
       // 登录结束按钮loading
       this.isLoginLoading = false

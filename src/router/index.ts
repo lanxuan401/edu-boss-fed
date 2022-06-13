@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -14,6 +15,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     component: Layout,
+    meta: { requiresAuth: true }, // meta 默认就是一个空对象
     children: [
       {
         // 默认子路由
@@ -67,6 +69,36 @@ const routes: Array<RouteConfig> = [
 
 const router = new VueRouter({
   routes
+})
+
+// 全局前置守卫：任何页面的访问都要经过这里
+// to:要去哪里的路由信息
+// from:从哪里来的路由信息
+// next:通行的标志
+router.beforeEach((to, from, next) => {
+  console.log('to=>', to)
+  console.log('from=>', from)
+
+  // to.matched.some 是一个数组（匹配到的是路由记录）
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.state.user) {
+      // 跳转到登录页面
+      next({
+        name: 'login',
+        query: { // 通过url传递查询字符串参数
+          redirect: to.fullPath // 把登录成功需要返回的页面告诉登录页面
+        }
+      })
+    } else {
+      next() // 允许通过
+    }
+  } else {
+    next() // 允许通过
+  }
+
+  // 路由守卫中一定要调用next, 否则页码无法展示
+  next()
+  // return false
 })
 
 export default router

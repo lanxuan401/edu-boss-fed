@@ -1,6 +1,7 @@
 // 用户相关的请求模块
 import request from '@/utils/request'
 import qs from 'qs'
+import store from '@/store'
 
 interface User {
     phone: string
@@ -18,5 +19,12 @@ export const login = (data: User) => {
     // 则Content-Type会被设置为application/x-www.form-urlencoded
     // 如果data 是FormData对象，则Content-Type是multipart/form-data
     data: qs.stringify(data)
+  })
+}
+
+export const getUserInfo = () => {
+  return request({
+    method: 'GET',
+    url: '/front/user/getInfo'
   })
 }
