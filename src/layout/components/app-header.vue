@@ -39,12 +39,13 @@ export default Vue.extend({
   },
   created () {
     this.loadUserInfo()
+    this.loadUserInfo()
   },
   methods: {
     async loadUserInfo () {
       const { data } = await getUserInfo()
       this.userInfo = data.content
-      console.log(data)
+      console.log('loadUserInfo')
     },
     handleLogout () {
       console.log('退出!')

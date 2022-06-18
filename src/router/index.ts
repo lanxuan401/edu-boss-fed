@@ -14,7 +14,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/',
-    component: Layout,
+    component: () => import(/* webpackChunkName: 'layout' */ '@/layout/index.vue'),
     meta: { requiresAuth: true }, // meta 默认就是一个空对象
     children: [
       {
@@ -57,6 +57,16 @@ const routes: Array<RouteConfig> = [
         path: '/advert-space',
         name: 'advert-space',
         component: () => import(/* webpackChunkName: 'advert-space' */ '@/views/advert-space/index.vue')
+      },
+      {
+        path: '/menu/create',
+        name: 'menu-create',
+        component: () => import(/* webpackChunkName: 'menu-create-edit' */ '@/views/menu/create.vue')
+      },
+      {
+        path: '/menu/:id/edit',
+        name: 'menu-edit',
+        component: () => import(/* webpackChunkName: 'menu-create-edit' */ '@/views/menu/edit.vue')
       }
     ]
   },
@@ -76,8 +86,8 @@ const router = new VueRouter({
 // from:从哪里来的路由信息
 // next:通行的标志
 router.beforeEach((to, from, next) => {
-  console.log('to=>', to)
-  console.log('from=>', from)
+  // console.log('to=>', to)
+  // console.log('from=>', from)
 
   // to.matched.some 是一个数组（匹配到的是路由记录）
   if (to.matched.some(record => record.meta.requiresAuth)) {
