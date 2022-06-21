@@ -154,7 +154,7 @@ export default Vue.extend({
         this.$message.success('删除成功')
         this.loadRoles()
       } catch (err) {
-        if (err && err.response) {
+        if (err) {
           this.$message.error('删除失败，请重试')
         } else {
           this.$message.info('取消删除')
