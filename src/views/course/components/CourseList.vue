@@ -100,12 +100,12 @@
              })"
             >编辑</el-button>
             <el-button
-              @click="$router.push({
-                name: 'course-section',
-                params: {
-                  courseId: scope.row.id
-                }
-              })"
+             @click="$router.push({
+               name: 'course-section',
+               params: {
+                 courseId:scope.row.id
+               }
+             })"
             >内容管理</el-button>
           </template>
         </el-table-column>
