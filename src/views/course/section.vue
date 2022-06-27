@@ -26,6 +26,10 @@
                 name:'course-video',
                 params: {
                   courseId
+                },
+                query: {
+                  sectionId: node.parent.id,
+                  lessonId:data.id
                 }
                })">上传视频</el-button>
               <el-button>状态</el-button>
